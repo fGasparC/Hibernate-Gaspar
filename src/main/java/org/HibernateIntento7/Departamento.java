@@ -1,14 +1,14 @@
 package org.HibernateIntento7;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "departamentos")
 public class Departamento {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -17,6 +17,9 @@ public class Departamento {
 
     @Column(name = "localizacion", length = 50)
     private String localizacion;
+
+    @OneToMany
+    private Set<Empleado> empleados = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -40,6 +43,14 @@ public class Departamento {
 
     public void setLocalizacion(String localizacion) {
         this.localizacion = localizacion;
+    }
+
+    public Set<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public void setEmpleados(Set<Empleado> empleados) {
+        this.empleados = empleados;
     }
 
 }

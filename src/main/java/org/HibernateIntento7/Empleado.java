@@ -2,11 +2,14 @@ package org.HibernateIntento7;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "empleados")
 public class Empleado {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -32,6 +35,9 @@ public class Empleado {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departamento")
     private Departamento departamento;
+
+    @OneToMany
+    private Set<Empleado> empleados = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -95,6 +101,14 @@ public class Empleado {
 
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
+    }
+
+    public Set<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public void setEmpleados(Set<Empleado> empleados) {
+        this.empleados = empleados;
     }
 
 }
